@@ -6,9 +6,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Developer guide? Raise issue/pr here: https://github.com/awsdocs/aws-cdk-guide
+        Developer guide? Raise issue/pr here: https://Weasledorf-Inc.github.io/taskmaster
 
-        Want to help? Submit a pull request here: https://github.com/aws/aws-cdk
+        Want to help? Submit a pull request here: https://github.com/Weasledorf-Inc/taskmaster
 
   - type: input
     id: doc-link

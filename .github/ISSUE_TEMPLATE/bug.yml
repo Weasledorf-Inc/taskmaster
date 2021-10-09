@@ -41,10 +41,10 @@ body:
       required: true
 
   - type: input
-    id: cdk-version
+    id: taskmaster-version
     attributes:
-      label: CDK CLI Version
-      description: Output of `cdk version`
+      label: Task Master Version
+      description: Version of TaskMaster
     validations:
       required: true
 

@@ -6,14 +6,14 @@ body:
   - type: markdown
     attributes:
       value: |
-        If there is an issue regarding developer guide, please create an issue [here](https://github.com/awsdocs/aws-cdk-guide/issues).
+        If there is an issue regarding developer guide, please create an issue [here](https://github.com/Weasledorf-Inc/taskmaster/issues).
 
   - type: input
     id: issue
     attributes:
       label: General Issue
       description: |
-        For support questions, please first reference our [documentation](https://docs.aws.amazon.com/cdk/api/latest), then use [Stackoverflow](https://stackoverflow.com/questions/tagged/aws-cdk). This repository's issues are intended for feature requests and bug reports.
+        This repository's issues are intended for feature requests and bug reports.
     validations:
       required: true
 
@@ -27,10 +27,10 @@ body:
       required: true
 
   - type: input
-    id: cdk-version
+    id: taskmaster-version
     attributes:
-      label: CDK CLI Version
-      description: Output of `cdk version`
+      label: Task Master Version
+      description: Task Master latest version
     validations:
       required: true
 

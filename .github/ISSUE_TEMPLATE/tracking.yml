@@ -18,23 +18,9 @@ body:
       required: true
 
   - type: input
-    id: cdk-api-docs-link
+    id: task-master-api-docs-link
     attributes:
-      label: Link to the service’s CDK Construct Library API reference page.
-    validations:
-      required: true
-
-  - type: dropdown
-    id: maturity
-    attributes:
-      label:  "Maturity: CloudFormation Resources Only"
-      description: |
-        See the [AWS Construct Library Module Lifecycle doc](https://github.com/aws/aws-cdk-rfcs/blob/master/text/0107-construct-library-module-lifecycle.md) for more information about maturity levels.
-      options:
-        - CloudFormation Resources Only
-        - Experimental
-        - Developer Preview
-        - Stable
+      label: Link to the Task Master doc page.
     validations:
       required: true
 
