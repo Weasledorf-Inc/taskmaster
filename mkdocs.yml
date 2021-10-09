@@ -1,0 +1,24 @@
+site_name: Task Master
+site_url: https://Weasledorf-Inc.github.io/taskmaster
+site_description: Task Master Forever!
+repo_url: https://github.com/Weasledorf-Inc/taskmaster
+theme:
+    name: material
+    features:
+      - navigation.sections
+      - navigation.indexes
+      - navigation.top
+      - toc.integrate
+nav:
+  - 'index.md' 
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tabbed
+  - toc:
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - admonition
+  - attr_list
