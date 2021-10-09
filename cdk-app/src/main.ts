@@ -1,17 +1,21 @@
 import { App, Construct, Stack, StackProps } from '@aws-cdk/core';
+import * as dynamodb from '@aws-cdk/aws-dynamodb';
+
 
 export class MyStack extends Stack {
   constructor(scope: Construct, id: string, props: StackProps = {}) {
     super(scope, id, props);
 
-    // define resources here...
+    new dynamodb.Table(this, 'table', {
+      partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING }
+    })
   }
 }
 
 // for development, use account/region from cdk cli
 const devEnv = {
-  account: process.env.CDK_DEFAULT_ACCOUNT,
-  region: process.env.CDK_DEFAULT_REGION,
+  account: "496834626558",
+  region: "us-east-1",
 };
 
 const app = new App();
