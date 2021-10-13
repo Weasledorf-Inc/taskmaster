@@ -3,22 +3,37 @@ info:
   description: "This is the Task Master Api"
   version: 0.0.1
   title: Task Master
+tags:
+  - name: task
+    description: Operations tasks
+  - name: user
+    description: Operations for users
 paths:
   /:
-    get: 
+    get:
       summary: See Available Services
       operationId: getServices
       responses:
         "200":
-          description: "successful operation" 
+          description: "successful operation"
   /task:
     get:
+      tags:
+        - task
       summary: "Retrieve Tasks"
       responses:
         "200":
           description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
     post:
       summary: "Create Task"
+      tags:
+        - task
       requestBody:
         $ref: "#/components/requestBodies/Task"
       responses:
@@ -28,7 +43,17 @@ paths:
           description: "unauthorized request"
   /task/{taskId}:
     get:
+      tags:
+        - task
       summary: "Retrieve Task By Id"
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          description: ID of the task to retrieve
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: "successful operation"
@@ -37,7 +62,19 @@ paths:
         "404":
           description: "task not found"
     put:
+      tags:
+        - task
       summary: "Update Task By Id"
+      parameters:
+        - name: taskId
+          in: path
+          description: ID of the task to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        $ref: '#/components/requestBodies/Task'
       responses:
         "200":
           description: "successful operation"
@@ -46,6 +83,16 @@ paths:
         "404":
           description: "task not found"
     delete:
+      tags:
+        - task
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          description: ID of the task to be deleted
+          schema:
+            type: integer
+            format: int64
       summary: "Delete Task By Id"
       responses:
         "200":
@@ -56,13 +103,23 @@ paths:
           description: "task not found"
   /user:
     get:
+      tags:
+        - user
       summary: "List Users (Admin)"
       responses:
         "200":
           description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
         "403":
           description: "unauthorized request"
     post:
+      tags:
+        - user
       summary: "Create New User"
       requestBody:
         $ref: "#/components/requestBodies/User"
@@ -73,23 +130,63 @@ paths:
           description: "unauthorized request"
   /user/{userId}:
     get:
+      tags:
+        - user
       summary: "Get User Details"
+      parameters:
+        - name: userId
+          in: path
+          description: ID of the user to be retrieved
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         "403":
           description: "unauthorized request"
         "404":
           description: "user not found"
     put:
+      tags:
+        - user
       summary: "Update User Data"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user to be updated
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        $ref: "#/components/requestBodies/User"
       responses:
         "200":
           description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         "403":
           description: "unauthorized request"
     delete:
+      tags:
+        - user
       summary: "Delete User (Admin)"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user to be updated
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: "successful operation"
@@ -211,6 +308,3 @@ components:
           type: string
         message:
           type: string
-    
-
-    
