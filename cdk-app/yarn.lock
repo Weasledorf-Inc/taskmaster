@@ -21,6 +21,25 @@
     "@aws-cdk/cx-api" "1.127.0"
     constructs "^3.3.69"
 
+"@aws-cdk/aws-apigateway@^1.125.0":
+  version "1.127.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-apigateway/-/aws-apigateway-1.127.0.tgz#5c580bc6e03690623358d6973c791fea972c62ae"
+  integrity sha512-P4ToKqsy2VvMLi3zUy5gXxAG6aAMLYGXQXZbf7gEyo4nIsRpNHNZohEhigTmCaLgDG93b+ro2Mz3JIhdyL+37w==
+  dependencies:
+    "@aws-cdk/aws-certificatemanager" "1.127.0"
+    "@aws-cdk/aws-cloudwatch" "1.127.0"
+    "@aws-cdk/aws-cognito" "1.127.0"
+    "@aws-cdk/aws-ec2" "1.127.0"
+    "@aws-cdk/aws-elasticloadbalancingv2" "1.127.0"
+    "@aws-cdk/aws-iam" "1.127.0"
+    "@aws-cdk/aws-lambda" "1.127.0"
+    "@aws-cdk/aws-logs" "1.127.0"
+    "@aws-cdk/aws-s3" "1.127.0"
+    "@aws-cdk/aws-s3-assets" "1.127.0"
+    "@aws-cdk/core" "1.127.0"
+    "@aws-cdk/cx-api" "1.127.0"
+    constructs "^3.3.69"
+
 "@aws-cdk/aws-applicationautoscaling@1.127.0":
   version "1.127.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-applicationautoscaling/-/aws-applicationautoscaling-1.127.0.tgz#8327bf6248ade0ff4a499c497c92c47bd3b1df3b"
@@ -38,6 +57,18 @@
   integrity sha512-Vbv55ZUG71JKuTWBvEu0Jt4bSLS+JCkbdR7/LzZe3HemSdbqF5+5gyh86FwxAleo01HxPYuGb5Qc2VxaxKT6vQ==
   dependencies:
     "@aws-cdk/aws-iam" "1.127.0"
+    "@aws-cdk/core" "1.127.0"
+    constructs "^3.3.69"
+
+"@aws-cdk/aws-certificatemanager@1.127.0":
+  version "1.127.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-certificatemanager/-/aws-certificatemanager-1.127.0.tgz#aa8e6d7df20f7d1201bd58a9a8ad5e81419e6abb"
+  integrity sha512-uJhSEMEGONYRg/ejSaKEa1atr5ibhiEKW66aFzUQN1Q+DKk93ycR/UC0cHoYs1HQbKK0n/JJ3rhJSWgFVPLd5Q==
+  dependencies:
+    "@aws-cdk/aws-cloudwatch" "1.127.0"
+    "@aws-cdk/aws-iam" "1.127.0"
+    "@aws-cdk/aws-lambda" "1.127.0"
+    "@aws-cdk/aws-route53" "1.127.0"
     "@aws-cdk/core" "1.127.0"
     constructs "^3.3.69"
 
@@ -79,6 +110,19 @@
   dependencies:
     "@aws-cdk/core" "1.127.0"
     constructs "^3.3.69"
+
+"@aws-cdk/aws-cognito@1.127.0":
+  version "1.127.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-cognito/-/aws-cognito-1.127.0.tgz#8775979515925be9af1492e08ec53d28ed75d56f"
+  integrity sha512-yy94PjbmPY6wTQ5EM3LBUHh73eRXTXZuPUtOI7CD//t7bDG64LDKwsVOVr+7Ckq4vJ3ci5KEwzITtyPIc4dN2w==
+  dependencies:
+    "@aws-cdk/aws-certificatemanager" "1.127.0"
+    "@aws-cdk/aws-iam" "1.127.0"
+    "@aws-cdk/aws-lambda" "1.127.0"
+    "@aws-cdk/core" "1.127.0"
+    "@aws-cdk/custom-resources" "1.127.0"
+    constructs "^3.3.69"
+    punycode "^2.1.1"
 
 "@aws-cdk/aws-dynamodb@^1.125.0":
   version "1.127.0"
@@ -148,6 +192,23 @@
     "@aws-cdk/cloud-assembly-schema" "1.127.0"
     "@aws-cdk/core" "1.127.0"
     "@aws-cdk/cx-api" "1.127.0"
+    constructs "^3.3.69"
+
+"@aws-cdk/aws-elasticloadbalancingv2@1.127.0":
+  version "1.127.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-elasticloadbalancingv2/-/aws-elasticloadbalancingv2-1.127.0.tgz#7bb2300914fa6da05397a6dfeb1fedfa6adb18dc"
+  integrity sha512-sMzoJtVH8S6m+P7JcGWM8uvyi86onNkpTwDPnAUx4NwhXmMyhRckFBczmQAI/yPjxdwTsK0fXvITl5WMe0qMMQ==
+  dependencies:
+    "@aws-cdk/aws-certificatemanager" "1.127.0"
+    "@aws-cdk/aws-cloudwatch" "1.127.0"
+    "@aws-cdk/aws-ec2" "1.127.0"
+    "@aws-cdk/aws-iam" "1.127.0"
+    "@aws-cdk/aws-lambda" "1.127.0"
+    "@aws-cdk/aws-s3" "1.127.0"
+    "@aws-cdk/cloud-assembly-schema" "1.127.0"
+    "@aws-cdk/core" "1.127.0"
+    "@aws-cdk/cx-api" "1.127.0"
+    "@aws-cdk/region-info" "1.127.0"
     constructs "^3.3.69"
 
 "@aws-cdk/aws-events@1.127.0":
@@ -226,6 +287,19 @@
     "@aws-cdk/aws-kms" "1.127.0"
     "@aws-cdk/aws-s3-assets" "1.127.0"
     "@aws-cdk/core" "1.127.0"
+    constructs "^3.3.69"
+
+"@aws-cdk/aws-route53@1.127.0":
+  version "1.127.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-route53/-/aws-route53-1.127.0.tgz#5f43b53e764c59b0dff8f6e07ae453dff99685f6"
+  integrity sha512-AukjVi0kR6zP1F/0UIHmxfAPGh+ZlJWYokDqUPMjfgJUNpxGkFnkibMcjIG4S/P9TlESrvikF+2eYyjsY7uP8w==
+  dependencies:
+    "@aws-cdk/aws-ec2" "1.127.0"
+    "@aws-cdk/aws-iam" "1.127.0"
+    "@aws-cdk/aws-logs" "1.127.0"
+    "@aws-cdk/cloud-assembly-schema" "1.127.0"
+    "@aws-cdk/core" "1.127.0"
+    "@aws-cdk/custom-resources" "1.127.0"
     constructs "^3.3.69"
 
 "@aws-cdk/aws-s3-assets@1.127.0":

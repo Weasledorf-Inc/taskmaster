@@ -57,6 +57,10 @@ paths:
       responses:
         "200":
           description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
         "403":
           description: "unauthorized request"
         "404":
