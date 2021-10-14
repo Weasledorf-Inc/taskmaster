@@ -8,6 +8,7 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/core',
     '@aws-cdk/aws-dynamodb',
     '@aws-cdk/aws-apigateway',
+    '@aws-cdk/aws-lambda',
   ],
   // deps: [],                          /* Runtime dependencies of this module. */
   // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */

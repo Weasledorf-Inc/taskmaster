@@ -252,7 +252,7 @@
     "@aws-cdk/cx-api" "1.127.0"
     constructs "^3.3.69"
 
-"@aws-cdk/aws-lambda@1.127.0":
+"@aws-cdk/aws-lambda@1.127.0", "@aws-cdk/aws-lambda@^1.125.0":
   version "1.127.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-lambda/-/aws-lambda-1.127.0.tgz#a65ecbec841676df96e266dab23909d573c378cd"
   integrity sha512-OPYaBYDqPyuqOY9Q/UWMiNSGu3envS5Gn6qEc0O6sW7s1GKgVNNbPBn+LDeeIbp+inwdCNOSFQRy/hTIfQctVg==
