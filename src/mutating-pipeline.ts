@@ -30,7 +30,6 @@ export class SelfMutatingPipelineStack extends cdk.Stack {
       synth: new cdkPipeline.ShellStep('Synth', {
         input: cdkPipeline.CodePipelineSource.codeCommit(repo, 'main'),
         commands: [
-          'cd cdk-app',
           'yarn install',
           'yarn build',
           'npx cdk synth'
