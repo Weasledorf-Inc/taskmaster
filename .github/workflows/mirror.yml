@@ -1,0 +1,27 @@
+name: mirror
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch: {}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set git identity
+        run: |-
+          git config user.name "Automation"
+          git config user.email "github-actions@github.com"
+      - name: Push to codecommit
+        uses: docker://amazon/aws-cli:2.0.7
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        with:
+          args: git remote add aws ${{ secrets.TASK_MASTER_CODE_COMMIT_GRC }} && git push aws main
