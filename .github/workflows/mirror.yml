@@ -10,6 +10,12 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Install
+        run: |-
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+          pip install git-remote-codecommit
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -19,9 +25,9 @@ jobs:
           git config user.name "Automation"
           git config user.email "github-actions@github.com"
       - name: Push to codecommit
-        uses: docker://amazon/aws-cli:2.0.7
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        with:
-          args: git remote add aws ${{ secrets.TASK_MASTER_CODE_COMMIT_GRC }} && git push aws main
+        run: |-
+          git remote add aws ${{ secrets.TASK_MASTER_CODE_COMMIT_GRC }}
+          git push aws main
