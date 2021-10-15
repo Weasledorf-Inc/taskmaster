@@ -10,32 +10,8 @@
       "type": "build"
     },
     {
-      "name": "@typescript-eslint/eslint-plugin",
-      "type": "build"
-    },
-    {
-      "name": "@typescript-eslint/parser",
-      "type": "build"
-    },
-    {
       "name": "aws-cdk",
       "version": "^1.125.0",
-      "type": "build"
-    },
-    {
-      "name": "eslint",
-      "type": "build"
-    },
-    {
-      "name": "eslint-import-resolver-node",
-      "type": "build"
-    },
-    {
-      "name": "eslint-import-resolver-typescript",
-      "type": "build"
-    },
-    {
-      "name": "eslint-plugin-import",
       "type": "build"
     },
     {
@@ -45,10 +21,6 @@
     {
       "name": "jest-junit",
       "version": "^12",
-      "type": "build"
-    },
-    {
-      "name": "json-schema",
       "type": "build"
     },
     {
@@ -84,6 +56,11 @@
       "type": "runtime"
     },
     {
+      "name": "@aws-cdk/aws-codecommit",
+      "version": "^1.125.0",
+      "type": "runtime"
+    },
+    {
       "name": "@aws-cdk/aws-dynamodb",
       "version": "^1.125.0",
       "type": "runtime"
@@ -95,6 +72,11 @@
     },
     {
       "name": "@aws-cdk/core",
+      "version": "^1.125.0",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/pipelines",
       "version": "^1.125.0",
       "type": "runtime"
     }

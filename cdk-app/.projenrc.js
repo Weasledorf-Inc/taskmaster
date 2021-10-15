@@ -6,10 +6,13 @@ const project = new AwsCdkTypeScriptApp({
 
   cdkDependencies: [
     '@aws-cdk/core',
+    '@aws-cdk/pipelines',
     '@aws-cdk/aws-dynamodb',
     '@aws-cdk/aws-apigateway',
+    '@aws-cdk/aws-codecommit',
     '@aws-cdk/aws-lambda',
   ],
+  eslint: false,
   // deps: [],                          /* Runtime dependencies of this module. */
   // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],                       /* Build dependencies for this module. */
