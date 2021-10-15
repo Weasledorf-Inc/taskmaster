@@ -35,7 +35,6 @@ export class SelfMutatingPipelineStack extends cdk.Stack {
           'yarn build',
           'npx cdk synth'
         ],
-        primaryOutputDirectory: 'cdk-app/cdk.out'
       }),
     });
 
