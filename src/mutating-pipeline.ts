@@ -45,6 +45,6 @@ export class SelfMutatingPipelineStack extends cdk.Stack {
 
     const testWave = pipeline.addWave('test-wave');
     testWave.addStage(new DynamoDBStage(this, 'test-dynamo-db', {env: testEnv}));
-    devWave.addStage(new APIStage(this, 'test-api-stage', {env: testEnv}));
+    testWave.addStage(new APIStage(this, 'test-api-stage', {env: testEnv}));
   }
 }
