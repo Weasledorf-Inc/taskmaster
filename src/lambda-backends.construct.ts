@@ -1,6 +1,6 @@
-import * as cdk from '@aws-cdk/core';
+import * as path from 'path';
 import * as lambda from '@aws-cdk/aws-lambda';
-import path = require('path');
+import * as cdk from '@aws-cdk/core';
 
 export class LambdaBackendConstruct extends cdk.Construct {
   public getAllTasksLambda: lambda.Function;
@@ -14,18 +14,18 @@ export class LambdaBackendConstruct extends cdk.Construct {
   public deleteTaskLambda: lambda.Function;
   public deleteUserLambda: lambda.Function;
 
-  constructor(scope: cdk.Construct, id: string) {
+  constructor(scope: cdk.Construct, id: string, envName: string, environmentVariables?: {[key: string]: string}) {
     super(scope, id);
-    // TODO: Need to create a role that gives lambdas the permissions they need to dynamodb
-    
-    // Lambda Functions 
+    // Lambda Functions
     this.getAllTasksLambda = new lambda.Function(this, 'get-task-lambda', {
       code: lambda.Code.fromAsset(
         path.join(__dirname, './lambdas'),
         {
-          exclude: ['**', '!get_tasks.py']
-        }
+          exclude: ['**', '!get_tasks.py'],
+        },
       ),
+      functionName: `get-tasks-${envName}`,
+      environment: environmentVariables,
       runtime: lambda.Runtime.PYTHON_3_9,
       handler: 'get_tasks.handler',
     });
@@ -34,9 +34,11 @@ export class LambdaBackendConstruct extends cdk.Construct {
       code: lambda.Code.fromAsset(
         path.join(__dirname, './lambdas'),
         {
-          exclude: ['**', '!get_single_task.py']
-        }
+          exclude: ['**', '!get_single_task.py'],
+        },
       ),
+      functionName: `get-single-task-${envName}`,
+      environment: environmentVariables,
       runtime: lambda.Runtime.PYTHON_3_9,
       handler: 'get_single_task.handler',
     });
@@ -45,9 +47,11 @@ export class LambdaBackendConstruct extends cdk.Construct {
       code: lambda.Code.fromAsset(
         path.join(__dirname, './lambdas'),
         {
-          exclude: ['**', '!create_task.py']
-        }
+          exclude: ['**', '!create_task.py'],
+        },
       ),
+      functionName: `create-task-${envName}`,
+      environment: environmentVariables,
       runtime: lambda.Runtime.PYTHON_3_9,
       handler: 'create_task.handler',
     });
@@ -56,9 +60,11 @@ export class LambdaBackendConstruct extends cdk.Construct {
       code: lambda.Code.fromAsset(
         path.join(__dirname, './lambdas'),
         {
-          exclude: ['**', '!update_task.py']
-        }
+          exclude: ['**', '!update_task.py'],
+        },
       ),
+      functionName: `update-task-${envName}`,
+      environment: environmentVariables,
       runtime: lambda.Runtime.PYTHON_3_9,
       handler: 'update_task.handler',
     });
@@ -67,20 +73,24 @@ export class LambdaBackendConstruct extends cdk.Construct {
       code: lambda.Code.fromAsset(
         path.join(__dirname, './lambdas'),
         {
-          exclude: ['**', '!delete_task.py']
-        }
+          exclude: ['**', '!delete_task.py'],
+        },
       ),
+      functionName: `delete-task-${envName}`,
+      environment: environmentVariables,
       runtime: lambda.Runtime.PYTHON_3_9,
       handler: 'delete_task.handler',
     });
 
-    this.getAllUsersLambda =  new lambda.Function(this, 'get-all-users-lambda', {
+    this.getAllUsersLambda = new lambda.Function(this, 'get-all-users-lambda', {
       code: lambda.Code.fromAsset(
         path.join(__dirname, './lambdas'),
         {
-          exclude: ['**', '!get_users.py']
-        }
+          exclude: ['**', '!get_users.py'],
+        },
       ),
+      functionName: `get-users-${envName}`,
+      environment: environmentVariables,
       runtime: lambda.Runtime.PYTHON_3_9,
       handler: 'get_users.handler',
     });
@@ -89,9 +99,11 @@ export class LambdaBackendConstruct extends cdk.Construct {
       code: lambda.Code.fromAsset(
         path.join(__dirname, './lambdas'),
         {
-          exclude: ['**', '!get_single_user.py']
-        }
+          exclude: ['**', '!get_single_user.py'],
+        },
       ),
+      functionName: `get-single-user-${envName}`,
+      environment: environmentVariables,
       runtime: lambda.Runtime.PYTHON_3_9,
       handler: 'get_single_user.handler',
     });
@@ -100,9 +112,11 @@ export class LambdaBackendConstruct extends cdk.Construct {
       code: lambda.Code.fromAsset(
         path.join(__dirname, './lambdas'),
         {
-          exclude: ['**', '!create_user.py']
-        }
+          exclude: ['**', '!create_user.py'],
+        },
       ),
+      functionName: `create-user-${envName}`,
+      environment: environmentVariables,
       runtime: lambda.Runtime.PYTHON_3_9,
       handler: 'create_user.handler',
     });
@@ -111,9 +125,11 @@ export class LambdaBackendConstruct extends cdk.Construct {
       code: lambda.Code.fromAsset(
         path.join(__dirname, './lambdas'),
         {
-          exclude: ['**', '!update_user.py']
-        }
+          exclude: ['**', '!update_user.py'],
+        },
       ),
+      functionName: `update-user-${envName}`,
+      environment: environmentVariables,
       runtime: lambda.Runtime.PYTHON_3_9,
       handler: 'update_user.handler',
     });
@@ -123,9 +139,11 @@ export class LambdaBackendConstruct extends cdk.Construct {
       code: lambda.Code.fromAsset(
         path.join(__dirname, './lambdas'),
         {
-          exclude: ['**', '!delete_user.py']
-        }
+          exclude: ['**', '!delete_user.py'],
+        },
       ),
+      functionName: `delete-user-${envName}`,
+      environment: environmentVariables,
       runtime: lambda.Runtime.PYTHON_3_9,
       handler: 'delete_user.handler',
     });

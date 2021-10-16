@@ -10,8 +10,32 @@
       "type": "build"
     },
     {
+      "name": "@typescript-eslint/eslint-plugin",
+      "type": "build"
+    },
+    {
+      "name": "@typescript-eslint/parser",
+      "type": "build"
+    },
+    {
       "name": "aws-cdk",
       "version": "^1.125.0",
+      "type": "build"
+    },
+    {
+      "name": "eslint",
+      "type": "build"
+    },
+    {
+      "name": "eslint-import-resolver-node",
+      "type": "build"
+    },
+    {
+      "name": "eslint-import-resolver-typescript",
+      "type": "build"
+    },
+    {
+      "name": "eslint-plugin-import",
       "type": "build"
     },
     {
@@ -21,6 +45,10 @@
     {
       "name": "jest-junit",
       "version": "^12",
+      "type": "build"
+    },
+    {
+      "name": "json-schema",
       "type": "build"
     },
     {
@@ -47,6 +75,11 @@
     },
     {
       "name": "@aws-cdk/assert",
+      "version": "^1.125.0",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/assertions",
       "version": "^1.125.0",
       "type": "runtime"
     },

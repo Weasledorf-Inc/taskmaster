@@ -1,21 +1,23 @@
-import { Construct, RemovalPolicy, Stack, StackProps } from '@aws-cdk/core';
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
+import { RemovalPolicy, Construct } from '@aws-cdk/core';
 
-export class TaskMasterDbStack extends Stack {
-  constructor(scope: Construct, id: string, props: StackProps = {}) {
-    super(scope, id, props);
+export class TaskMasterDbConstruct extends Construct {
+  public userTable: dynamodb.Table;
+  public taskTable: dynamodb.Table;
+  constructor(scope: Construct, id: string, envName: string) {
+    super(scope, id);
 
-    new dynamodb.Table(this, 'task-master-users', {
-      tableName: 'task-master-users',
+    this.userTable = new dynamodb.Table(this, 'task-master-users', {
+      tableName: `task-master-users-${envName}`,
       partitionKey: { name: 'userId', type: dynamodb.AttributeType.NUMBER },
       sortKey: { name: 'username', type: dynamodb.AttributeType.STRING },
-      removalPolicy: RemovalPolicy.DESTROY
-    })
+      removalPolicy: RemovalPolicy.DESTROY,
+    });
 
-    new dynamodb.Table(this, 'task-master-tasks', {
-      tableName: 'task-master-tasks',
+    this.taskTable = new dynamodb.Table(this, 'task-master-tasks', {
+      tableName: `task-master-tasks-${envName}`,
       partitionKey: { name: 'taskId', type: dynamodb.AttributeType.NUMBER },
-      removalPolicy: RemovalPolicy.DESTROY
-    })
+      removalPolicy: RemovalPolicy.DESTROY,
+    });
   }
 }

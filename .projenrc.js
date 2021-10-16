@@ -11,8 +11,8 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-apigateway',
     '@aws-cdk/aws-codecommit',
     '@aws-cdk/aws-lambda',
+    '@aws-cdk/assertions',
   ],
-  eslint: false,
   context: {
     '@aws-cdk/core:newStyleStackSynthesis': true,
   },

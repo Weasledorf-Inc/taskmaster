@@ -1,29 +1,19 @@
+import * as codecommit from '@aws-cdk/aws-codecommit';
 import * as cdk from '@aws-cdk/core';
 import * as cdkPipeline from '@aws-cdk/pipelines';
-import * as codecommit from '@aws-cdk/aws-codecommit';
 import { TaskMasterApiStack } from './api-gateway.stack';
-import { TaskMasterDbStack } from './dynamodb.stack';
 import { devEnv, testEnv } from './constants';
 
-
 export class APIStage extends cdk.Stage {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StageProps) {
+  constructor(scope: cdk.Construct, id: string, envName: string, props?: cdk.StageProps) {
     super(scope, id, props);
-    new TaskMasterApiStack(this, 'task-master-api', props);
+    new TaskMasterApiStack(this, 'task-master-api', envName, props);
   }
 }
-
-export class DynamoDBStage extends cdk.Stage {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StageProps) {
-    super(scope, id, props);
-    new TaskMasterDbStack(this, 'dynamodb-stacks', props);
-  }
-}
-
 export class SelfMutatingPipelineStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
-    
+
     const repo = codecommit.Repository.fromRepositoryName(this, 'repo', 'taskmaster');
 
     const pipeline = new cdkPipeline.CodePipeline(this, 'self-mutating-pipeline', {
@@ -34,17 +24,15 @@ export class SelfMutatingPipelineStack extends cdk.Stack {
         commands: [
           'yarn install',
           'yarn build',
-          'npx cdk synth'
+          'npx cdk synth',
         ],
       }),
     });
 
     const devWave = pipeline.addWave('dev-wave');
-    devWave.addStage(new DynamoDBStage(this, 'dev-dynamo-db', {env: devEnv}));
-    devWave.addStage(new APIStage(this, 'dev-api-stage', {env: devEnv}));
+    devWave.addStage(new APIStage(this, 'dev-api-stage', 'dev', { env: devEnv }));
 
     const testWave = pipeline.addWave('test-wave');
-    testWave.addStage(new DynamoDBStage(this, 'test-dynamo-db', {env: testEnv}));
-    testWave.addStage(new APIStage(this, 'test-api-stage', {env: testEnv}));
+    testWave.addStage(new APIStage(this, 'test-api-stage', 'test', { env: testEnv }));
   }
 }

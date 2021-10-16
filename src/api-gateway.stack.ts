@@ -1,20 +1,29 @@
-import { Stack, StackProps, Construct } from '@aws-cdk/core';
 import * as apigateway from '@aws-cdk/aws-apigateway';
+import { Stack, StackProps, Construct } from '@aws-cdk/core';
+import { TaskMasterDbConstruct } from './dynamodb.stack';
 import { LambdaBackendConstruct } from './lambda-backends.construct';
 
 export class TaskMasterApiStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, envName: string, props?: StackProps) {
     super(scope, id, props);
 
     const api = new apigateway.RestApi(this, 'task-master-api', {
-      restApiName: 'Task Master Api'
+      restApiName: `Task Master Api (${envName} )`,
     });
 
-    const backendLambdas = new LambdaBackendConstruct(this, 'backend-lambdas');
+    const dynamodbTables = new TaskMasterDbConstruct(this, 'dynamodb-tables', envName);
+
+    const lambdaEnvironmentVariables = {
+      USER_TABLE: dynamodbTables.userTable.tableName,
+      TASK_TABLE: dynamodbTables.taskTable.tableName,
+    };
+
+    const backendLambdas = new LambdaBackendConstruct(this, 'backend-lambdas', envName, lambdaEnvironmentVariables);
+    dynamodbTables.taskTable.grantFullAccess(backendLambdas.createTaskLambda);
 
     /**
      * Request Models
-     * 
+     *
      */
 
     // Available Endpoints Response Model
@@ -47,16 +56,16 @@ export class TaskMasterApiStack extends Stack {
           required: ['username', 'email'],
           properties: {
             username: {
-              type: apigateway.JsonSchemaType.STRING
+              type: apigateway.JsonSchemaType.STRING,
             },
             email: {
-              type: apigateway.JsonSchemaType.STRING
-            }
-          }
-        }
-      }
+              type: apigateway.JsonSchemaType.STRING,
+            },
+          },
+        },
+      },
     );
-    
+
     // User Response Model
     const userResponseModel = api.addModel(
       'user-response-model',
@@ -76,9 +85,9 @@ export class TaskMasterApiStack extends Stack {
             email: {
               type: apigateway.JsonSchemaType.STRING,
             },
-          }
-        }
-      }
+          },
+        },
+      },
     );
 
     // Task Request Model
@@ -96,32 +105,32 @@ export class TaskMasterApiStack extends Stack {
               type: apigateway.JsonSchemaType.STRING,
             },
             createdBy: {
-              type: apigateway.JsonSchemaType.INTEGER
+              type: apigateway.JsonSchemaType.INTEGER,
             },
             assignedTo: {
-              type: apigateway.JsonSchemaType.INTEGER
+              type: apigateway.JsonSchemaType.INTEGER,
             },
             clonedBy: {
-              type: apigateway.JsonSchemaType.INTEGER
+              type: apigateway.JsonSchemaType.INTEGER,
             },
             status: {
-              type: apigateway.JsonSchemaType.STRING
+              type: apigateway.JsonSchemaType.STRING,
             },
             createdDate: {
-              type: apigateway.JsonSchemaType.STRING
+              type: apigateway.JsonSchemaType.STRING,
             },
             completedDate: {
-              type: apigateway.JsonSchemaType.STRING
+              type: apigateway.JsonSchemaType.STRING,
             },
             dueDate: {
-              type: apigateway.JsonSchemaType.STRING
+              type: apigateway.JsonSchemaType.STRING,
             },
             reminder: {
-              type: apigateway.JsonSchemaType.STRING
-            }
-          }
-        }
-      }
+              type: apigateway.JsonSchemaType.STRING,
+            },
+          },
+        },
+      },
     );
 
     // Task Response Model
@@ -135,38 +144,38 @@ export class TaskMasterApiStack extends Stack {
           type: apigateway.JsonSchemaType.OBJECT,
           properties: {
             id: {
-              type: apigateway.JsonSchemaType.INTEGER
+              type: apigateway.JsonSchemaType.INTEGER,
             },
             taskDetails: {
-              type: apigateway.JsonSchemaType.STRING
+              type: apigateway.JsonSchemaType.STRING,
             },
             createdBy: {
-              type: apigateway.JsonSchemaType.INTEGER
+              type: apigateway.JsonSchemaType.INTEGER,
             },
             assignedTo: {
-              type: apigateway.JsonSchemaType.INTEGER
+              type: apigateway.JsonSchemaType.INTEGER,
             },
             clonedBy: {
-              type: apigateway.JsonSchemaType.INTEGER
+              type: apigateway.JsonSchemaType.INTEGER,
             },
             status: {
-              type: apigateway.JsonSchemaType.STRING
+              type: apigateway.JsonSchemaType.STRING,
             },
             createdDate: {
-              type: apigateway.JsonSchemaType.STRING
+              type: apigateway.JsonSchemaType.STRING,
             },
             completedDate: {
-              type: apigateway.JsonSchemaType.STRING
+              type: apigateway.JsonSchemaType.STRING,
             },
             dueDate: {
-              type: apigateway.JsonSchemaType.STRING
+              type: apigateway.JsonSchemaType.STRING,
             },
             reminder: {
-              type: apigateway.JsonSchemaType.STRING
-            }
-          }
-        }
-      }
+              type: apigateway.JsonSchemaType.STRING,
+            },
+          },
+        },
+      },
     );
 
     /**
@@ -182,7 +191,7 @@ export class TaskMasterApiStack extends Stack {
     // Task Operations
 
     // /
-    api.root.addMethod('GET', 
+    api.root.addMethod('GET',
       new apigateway.LambdaIntegration(backendLambdas.getAllTasksLambda), // TODO: Change to corresponding lambda
       {
         methodResponses: [
@@ -201,34 +210,34 @@ export class TaskMasterApiStack extends Stack {
       new apigateway.LambdaIntegration(backendLambdas.getAllTasksLambda),
       {
         methodResponses: [
-          { 
+          {
             statusCode: '200',
             responseModels: {
-              'application/json': taskResponseModel
+              'application/json': taskResponseModel,
             },
           },
         ],
       },
     );
-    
+
     tasks.addMethod('POST',
       new apigateway.LambdaIntegration(backendLambdas.createTaskLambda),
       {
         requestModels: {
-          'application/json': taskRequestModel
+          'application/json': taskRequestModel,
         },
         methodResponses: [
           {
             statusCode: '200',
             responseModels: {
               'application/json': taskResponseModel,
-            }
+            },
           },
           {
             statusCode: '403',
-          }
-        ]
-      }
+          },
+        ],
+      },
     );
 
     // /task/{taskId}
@@ -237,9 +246,9 @@ export class TaskMasterApiStack extends Stack {
       {
         methodResponses: [
           {
-            statusCode: '200', 
+            statusCode: '200',
             responseModels: {
-              'application/json': taskResponseModel
+              'application/json': taskResponseModel,
             },
           },
           {
@@ -247,19 +256,19 @@ export class TaskMasterApiStack extends Stack {
           },
           {
             statusCode: '404',
-          }
+          },
         ],
       },
     );
 
-    task.addMethod('PUT', 
+    task.addMethod('PUT',
       new apigateway.LambdaIntegration(backendLambdas.updateTaskLambda),
       {
         methodResponses: [
           {
-            statusCode: '200', 
+            statusCode: '200',
             responseModels: {
-              'application/json': taskResponseModel
+              'application/json': taskResponseModel,
             },
           },
           {
@@ -267,7 +276,7 @@ export class TaskMasterApiStack extends Stack {
           },
           {
             statusCode: '404',
-          }
+          },
         ],
       },
     );
@@ -277,9 +286,9 @@ export class TaskMasterApiStack extends Stack {
       {
         methodResponses: [
           {
-            statusCode: '200', 
+            statusCode: '200',
             responseModels: {
-              'application/json': taskResponseModel
+              'application/json': taskResponseModel,
             },
           },
           {
@@ -287,10 +296,10 @@ export class TaskMasterApiStack extends Stack {
           },
           {
             statusCode: '404',
-          }
+          },
         ],
       },
-    )
+    );
 
     // User Operations
 
@@ -300,9 +309,9 @@ export class TaskMasterApiStack extends Stack {
       {
         methodResponses: [
           {
-            statusCode: '200', 
+            statusCode: '200',
             responseModels: {
-              'application/json': userResponseModel
+              'application/json': userResponseModel,
             },
           },
           {
@@ -316,13 +325,13 @@ export class TaskMasterApiStack extends Stack {
       new apigateway.LambdaIntegration(backendLambdas.createUserLambda),
       {
         requestModels: {
-          'application/json': userRequestModel
+          'application/json': userRequestModel,
         },
         methodResponses: [
           {
-            statusCode: '200', 
+            statusCode: '200',
             responseModels: {
-              'application/json': userResponseModel
+              'application/json': userResponseModel,
             },
           },
           {
@@ -333,14 +342,14 @@ export class TaskMasterApiStack extends Stack {
     );
 
     // /user/{userId}
-    user.addMethod('GET', 
+    user.addMethod('GET',
       new apigateway.LambdaIntegration(backendLambdas.getSingleUserLambda),
       {
         methodResponses: [
           {
-            statusCode: '200', 
+            statusCode: '200',
             responseModels: {
-              'application/json': userResponseModel
+              'application/json': userResponseModel,
             },
           },
           {
@@ -348,19 +357,19 @@ export class TaskMasterApiStack extends Stack {
           },
           {
             statusCode: '404',
-          }
+          },
         ],
       },
     );
 
-    user.addMethod('PUT', 
+    user.addMethod('PUT',
       new apigateway.LambdaIntegration(backendLambdas.updateUserLambda),
       {
         methodResponses: [
           {
-            statusCode: '200', 
+            statusCode: '200',
             responseModels: {
-              'application/json': userResponseModel
+              'application/json': userResponseModel,
             },
           },
           {
@@ -368,12 +377,12 @@ export class TaskMasterApiStack extends Stack {
           },
           {
             statusCode: '404',
-          }
+          },
         ],
       },
     );
 
-    user.addMethod('DELETE', 
+    user.addMethod('DELETE',
       new apigateway.LambdaIntegration(backendLambdas.deleteUserLambda),
       {
         methodResponses: [
@@ -385,7 +394,7 @@ export class TaskMasterApiStack extends Stack {
           },
           {
             statusCode: '404',
-          }
+          },
         ],
       },
     );
