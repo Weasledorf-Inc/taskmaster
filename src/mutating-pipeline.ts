@@ -3,7 +3,7 @@ import * as cdkPipeline from '@aws-cdk/pipelines';
 import * as codecommit from '@aws-cdk/aws-codecommit';
 import { TaskMasterApiStack } from './api-gateway.stack';
 import { TaskMasterDbStack } from './dynamodb.stack';
-import { devEnv } from './main';
+import { devEnv, testEnv } from './constants';
 
 
 export class APIStage extends cdk.Stage {
@@ -38,8 +38,12 @@ export class SelfMutatingPipelineStack extends cdk.Stack {
       }),
     });
 
-    pipeline.addStage(new APIStage(this, 'dev-api-stage', {env: devEnv}));
-    pipeline.addStage(new DynamoDBStage(this, 'dev-dynamo-db', {env: devEnv}));
+    const devWave = pipeline.addWave('dev-wave');
+    devWave.addStage(new DynamoDBStage(this, 'dev-dynamo-db', {env: devEnv}));
+    devWave.addStage(new APIStage(this, 'dev-api-stage', {env: devEnv}));
 
+    const testWave = pipeline.addWave('test-wave');
+    testWave.addStage(new DynamoDBStage(this, 'test-dynamo-db', {env: testEnv}));
+    devWave.addStage(new APIStage(this, 'test-api-stage', {env: testEnv}));
   }
 }
