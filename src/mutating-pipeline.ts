@@ -28,6 +28,7 @@ export class SelfMutatingPipelineStack extends cdk.Stack {
 
     const pipeline = new cdkPipeline.CodePipeline(this, 'self-mutating-pipeline', {
       pipelineName: 'task-master-infrastructure',
+      crossAccountKeys: true,
       synth: new cdkPipeline.ShellStep('Synth', {
         input: cdkPipeline.CodePipelineSource.codeCommit(repo, 'main'),
         commands: [
