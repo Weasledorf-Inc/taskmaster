@@ -1,1 +1,1 @@
-export const DYNAMODB_TABLE_TYPE = 'AWS::DynamoDB::Table'
+export const DYNAMODB_TABLE_TYPE = 'AWS::DynamoDB::Table';

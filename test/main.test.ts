@@ -18,15 +18,14 @@ describe('When API Stack Is Synthesized', () => {
   describe('Dynamodb Tables resources consist of', () => {
     test('only 2 tables', () => {
       // GIVEN
-      const expectedDeletionPolicy = 'Delete';
-      const expectedUpdatePolicy = 'Delete';
+      const expectedTableCount = 2;
 
       // WHEN
       stack = new TaskMasterApiStack(app, 'test-api-stack', 'test-case');
       const assertTemplate = Template.fromStack(stack);
 
       // THEN
-      assertTemplate.resourceCountIs(DYNAMODB_TABLE_TYPE, 2);
+      assertTemplate.resourceCountIs(DYNAMODB_TABLE_TYPE, expectedTableCount);
     });
   });
 });
