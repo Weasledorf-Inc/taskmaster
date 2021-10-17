@@ -2,7 +2,7 @@ import '@aws-cdk/assert/jest';
 import { Template } from '@aws-cdk/assertions';
 import * as cdk from '@aws-cdk/core';
 
-import { TaskMasterApiStack } from '../src/api-gateway.stack';
+import { TaskMasterApiStack } from '../src/stacks/api-gateway.stack';
 import { API_RESOURCE_TYPE, DYNAMODB_TABLE_TYPE, LAMBDA_FUNCTION_TYPE, REST_API_TYPE } from './aws-resource-types';
 
 let app: cdk.App;
