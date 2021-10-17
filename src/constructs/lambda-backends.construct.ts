@@ -19,7 +19,7 @@ export class LambdaBackendConstruct extends cdk.Construct {
     // Lambda Functions
     this.getAllTasksLambda = new lambda.Function(this, 'get-task-lambda', {
       code: lambda.Code.fromAsset(
-        path.join(__dirname, './lambdas'),
+        path.join(__dirname, '../lambdas'),
         {
           exclude: ['**', '!get_tasks.py'],
         },
@@ -32,7 +32,7 @@ export class LambdaBackendConstruct extends cdk.Construct {
 
     this.getSingleTaskLambda = new lambda.Function(this, 'get-single-task-lambda', {
       code: lambda.Code.fromAsset(
-        path.join(__dirname, './lambdas'),
+        path.join(__dirname, '../lambdas'),
         {
           exclude: ['**', '!get_single_task.py'],
         },
@@ -45,7 +45,7 @@ export class LambdaBackendConstruct extends cdk.Construct {
 
     this.createTaskLambda = new lambda.Function(this, 'create-task-lambda', {
       code: lambda.Code.fromAsset(
-        path.join(__dirname, './lambdas'),
+        path.join(__dirname, '../lambdas'),
         {
           exclude: ['**', '!create_task.py'],
         },
@@ -58,7 +58,7 @@ export class LambdaBackendConstruct extends cdk.Construct {
 
     this.updateTaskLambda = new lambda.Function(this, 'update-task-lambda', {
       code: lambda.Code.fromAsset(
-        path.join(__dirname, './lambdas'),
+        path.join(__dirname, '../lambdas'),
         {
           exclude: ['**', '!update_task.py'],
         },
@@ -71,7 +71,7 @@ export class LambdaBackendConstruct extends cdk.Construct {
 
     this.deleteTaskLambda = new lambda.Function(this, 'delete-task-lambda', {
       code: lambda.Code.fromAsset(
-        path.join(__dirname, './lambdas'),
+        path.join(__dirname, '../lambdas'),
         {
           exclude: ['**', '!delete_task.py'],
         },
@@ -84,7 +84,7 @@ export class LambdaBackendConstruct extends cdk.Construct {
 
     this.getAllUsersLambda = new lambda.Function(this, 'get-all-users-lambda', {
       code: lambda.Code.fromAsset(
-        path.join(__dirname, './lambdas'),
+        path.join(__dirname, '../lambdas'),
         {
           exclude: ['**', '!get_users.py'],
         },
@@ -97,7 +97,7 @@ export class LambdaBackendConstruct extends cdk.Construct {
 
     this.getSingleUserLambda = new lambda.Function(this, 'get-single-user-lambda', {
       code: lambda.Code.fromAsset(
-        path.join(__dirname, './lambdas'),
+        path.join(__dirname, '../lambdas'),
         {
           exclude: ['**', '!get_single_user.py'],
         },
@@ -110,7 +110,7 @@ export class LambdaBackendConstruct extends cdk.Construct {
 
     this.createUserLambda = new lambda.Function(this, 'create-user-lambda', {
       code: lambda.Code.fromAsset(
-        path.join(__dirname, './lambdas'),
+        path.join(__dirname, '../lambdas'),
         {
           exclude: ['**', '!create_user.py'],
         },
@@ -123,7 +123,7 @@ export class LambdaBackendConstruct extends cdk.Construct {
 
     this.updateUserLambda = new lambda.Function(this, 'update-user-lambda', {
       code: lambda.Code.fromAsset(
-        path.join(__dirname, './lambdas'),
+        path.join(__dirname, '../lambdas'),
         {
           exclude: ['**', '!update_user.py'],
         },
@@ -137,7 +137,7 @@ export class LambdaBackendConstruct extends cdk.Construct {
 
     this.deleteUserLambda = new lambda.Function(this, 'delete-user-lambda', {
       code: lambda.Code.fromAsset(
-        path.join(__dirname, './lambdas'),
+        path.join(__dirname, '../lambdas'),
         {
           exclude: ['**', '!delete_user.py'],
         },

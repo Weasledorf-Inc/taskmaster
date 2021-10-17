@@ -12,6 +12,7 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-codecommit',
     '@aws-cdk/aws-lambda',
     '@aws-cdk/assertions',
+    '@aws-cdk/aws-cognito',
   ],
   context: {
     '@aws-cdk/core:newStyleStackSynthesis': true,
