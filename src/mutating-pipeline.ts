@@ -8,6 +8,10 @@ export class APIStage extends cdk.Stage {
   constructor(scope: cdk.Construct, id: string, envName: string, props?: cdk.StageProps) {
     super(scope, id, props);
     new TaskMasterApiStack(this, 'task-master-api', envName, props);
+
+    cdk.Tags.of(this).add('CreatedBy', 'Task Master Mutating Pipeline');
+    cdk.Tags.of(this).add('Project', 'Task Master');
+    cdk.Tags.of(this).add('Environment', envName);
   }
 }
 export class SelfMutatingPipelineStack extends cdk.Stack {
