@@ -23,6 +23,8 @@ export class TaskMasterApiStack extends Stack {
 
     const backendLambdas = new LambdaBackendConstruct(this, 'backend-lambdas', envName, lambdaEnvironmentVariables);
     dynamodbTables.taskTable.grantFullAccess(backendLambdas.createTaskLambda);
+    dynamodbTables.taskTable.grantFullAccess(backendLambdas.deleteTaskLambda);
+    dynamodbTables.taskTable.grantFullAccess(backendLambdas.getSingleTaskLambda);
 
     /**
      * Request Models
