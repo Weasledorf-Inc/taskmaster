@@ -6,6 +6,7 @@ import { TaskMasterApiStack } from './stacks/api-gateway.stack';
 const app = new App();
 
 new SelfMutatingPipelineStack(app, 'SelfMutatingPipeline', { env: managementEnv });
+
 const hasanTestStack = new TaskMasterApiStack(app, 'hasan-dev-stack', 'hasan-dev', { env: devEnv });
 
 Tags.of(hasanTestStack).add('developer', 'hasan');

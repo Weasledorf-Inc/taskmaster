@@ -9,7 +9,7 @@ export class TaskMasterApiStack extends Stack {
     super(scope, id, props);
 
     const api = new apigateway.RestApi(this, 'task-master-api', {
-      restApiName: `Task Master Api (${envName} )`,
+      restApiName: `Task Master Api (${envName})`,
     });
 
     const dynamodbTables = new TaskMasterDbConstruct(this, 'dynamodb-tables', envName);
