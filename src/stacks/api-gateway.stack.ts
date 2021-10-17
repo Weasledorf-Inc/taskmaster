@@ -1,25 +1,30 @@
 import * as apigateway from '@aws-cdk/aws-apigateway';
 import { Stack, StackProps, Construct } from '@aws-cdk/core';
-import { TaskMasterDbConstruct } from './dynamodb.stack';
-import { LambdaBackendConstruct } from './lambda-backends.construct';
+import { TaskMasterCognitoConstruct } from '../constructs/cognito.construct';
+import { TaskMasterDbConstruct } from '../constructs/dynamodb.construct';
+import { LambdaBackendConstruct } from '../constructs/lambda-backends.construct';
 
 export class TaskMasterApiStack extends Stack {
   constructor(scope: Construct, id: string, envName: string, props?: StackProps) {
     super(scope, id, props);
 
     const api = new apigateway.RestApi(this, 'task-master-api', {
-      restApiName: `Task Master Api (${envName} )`,
+      restApiName: `Task Master Api (${envName})`,
     });
 
     const dynamodbTables = new TaskMasterDbConstruct(this, 'dynamodb-tables', envName);
+    const cognitoResources = new TaskMasterCognitoConstruct(this, 'cognito-resources', envName);
 
     const lambdaEnvironmentVariables = {
-      USER_TABLE: dynamodbTables.userTable.tableName,
-      TASK_TABLE: dynamodbTables.taskTable.tableName,
+      USER_TABLE_NAME: dynamodbTables.userTable.tableName,
+      TASK_TABLE_NAME: dynamodbTables.taskTable.tableName,
+      COGNITO_USER_POOL_ID: cognitoResources.userPool.userPoolId,
     };
 
     const backendLambdas = new LambdaBackendConstruct(this, 'backend-lambdas', envName, lambdaEnvironmentVariables);
     dynamodbTables.taskTable.grantFullAccess(backendLambdas.createTaskLambda);
+    dynamodbTables.taskTable.grantFullAccess(backendLambdas.deleteTaskLambda);
+    dynamodbTables.taskTable.grantFullAccess(backendLambdas.getSingleTaskLambda);
 
     /**
      * Request Models

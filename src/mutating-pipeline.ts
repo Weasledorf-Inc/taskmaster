@@ -1,13 +1,17 @@
 import * as codecommit from '@aws-cdk/aws-codecommit';
 import * as cdk from '@aws-cdk/core';
 import * as cdkPipeline from '@aws-cdk/pipelines';
-import { TaskMasterApiStack } from './api-gateway.stack';
 import { devEnv, testEnv } from './constants';
+import { TaskMasterApiStack } from './stacks/api-gateway.stack';
 
 export class APIStage extends cdk.Stage {
   constructor(scope: cdk.Construct, id: string, envName: string, props?: cdk.StageProps) {
     super(scope, id, props);
     new TaskMasterApiStack(this, 'task-master-api', envName, props);
+
+    cdk.Tags.of(this).add('CreatedBy', 'Task Master Mutating Pipeline');
+    cdk.Tags.of(this).add('Project', 'Task Master');
+    cdk.Tags.of(this).add('Environment', envName);
   }
 }
 export class SelfMutatingPipelineStack extends cdk.Stack {

@@ -1,14 +1,44 @@
 import json
+import os
 import boto3    
 
-# https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html
+
 def handler(event, context):
   client = boto3.client('dynamodb')
   print(event)
-  print("***************")
-  print(context)
+  taskTable = os.environ['TASK_TABLE_NAME']
+  parameters = event['pathParameters']
+  taskId = parameters['taskId']
 
-  return {
-    "statusCode": 200,
-    "body": json.dumps(event)
-  }
+  print(f"TASK TABLE: {taskTable}")
+
+  try:
+    item = client.get_item(
+      TableName=taskTable,
+      Key={
+            'taskId': {
+                'S': taskId
+            }
+        }
+    )
+
+    if not "Item" in item:
+      return {
+        "statusCode": 404,
+        "body": f"Task {taskId} NOT FOUND!!"
+      }
+
+    result = client.delete_item(
+        TableName=taskTable,
+        Key={
+            'taskId': {
+                'S': taskId
+            }
+        }
+    )
+    return {
+      "statusCode": 200,
+      "body": json.dumps(result)
+    }
+  except Exception as e:
+    raise e
