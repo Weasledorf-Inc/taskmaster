@@ -16,9 +16,9 @@ beforeEach(() => {
 
 describe('When API Stack Is Synthesized', () => {
   describe('Dynamodb Tables resources consist of', () => {
-    test('2 tables', () => {
+    test('1 tables', () => {
       // GIVEN
-      const expectedTableCount = 2;
+      const expectedTableCount = 1;
 
       // WHEN
       stack = new TaskMasterApiStack(app, 'test-api-stack', 'test-case');

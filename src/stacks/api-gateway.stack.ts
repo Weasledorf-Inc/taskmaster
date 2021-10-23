@@ -16,7 +16,6 @@ export class TaskMasterApiStack extends Stack {
     const cognitoResources = new TaskMasterCognitoConstruct(this, 'cognito-resources', envName);
 
     const lambdaEnvironmentVariables = {
-      USER_TABLE_NAME: dynamodbTables.userTable.tableName,
       TASK_TABLE_NAME: dynamodbTables.taskTable.tableName,
       COGNITO_USER_POOL_ID: cognitoResources.userPool.userPoolId,
     };
@@ -25,6 +24,7 @@ export class TaskMasterApiStack extends Stack {
     dynamodbTables.taskTable.grantFullAccess(backendLambdas.createTaskLambda);
     dynamodbTables.taskTable.grantFullAccess(backendLambdas.deleteTaskLambda);
     dynamodbTables.taskTable.grantFullAccess(backendLambdas.getSingleTaskLambda);
+    dynamodbTables.taskTable.grantFullAccess(backendLambdas.updateTaskLambda);
 
     /**
      * Request Models
